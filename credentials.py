@@ -1,0 +1,5 @@
+server = "a"
+database = "b"
+login = "c"
+password = "d"
+port = "e"
