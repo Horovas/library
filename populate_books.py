@@ -19,7 +19,7 @@ def populate_db():
     for i in range(book_number):
         isbn = fake.isbn10(separator="") if i % 2 == 0 else fake.isbn13(separator="")
 
-        book_data.append(
+        book_data.append( 
             (
                 fake.catch_phrase(),
                 fake.name(),
@@ -32,7 +32,7 @@ def populate_db():
     # print(book_data)
 
     insert_query = """
-        INSERT INTO postgres.public.books 
+        INSERT INTO books 
             (title, author, published_year, isbn_code, status) 
             VALUES ( %s, %s, %s, %s, %s)
     """

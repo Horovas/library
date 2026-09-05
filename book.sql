@@ -1,7 +1,4 @@
-/*
-Для использования типа данных ISBN нужно предварительно активировать расширение в PostgreSQL командой:
-CREATE EXTENSION IF NOT EXISTS isn;
-*/
+
 
 --Создаём словарь статусов книги, который примерно отражает возможные положения книги в процессе её использования
 CREATE TABLE book_status(
@@ -10,19 +7,7 @@ CREATE TABLE book_status(
 	description TEXT
 );
 
-/*
-1	stock	Книга находится в фонде библиотеки. Готова к выдаче читателю
-2	hand	Книга находится у читателя на руках
-3	lost	Книга утеряна
-4	writeoff	Книга списана
-5	circulate	Книга готовится к передаче в фонд другой библиотеки
-6	repair	Книга находится на ремонте
-*/
-
---------------------------------------------------
-
-
-
+-- Создаём таблицу книг
 CREATE TABLE books (
     id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
@@ -35,13 +20,24 @@ CREATE TABLE books (
 );
 
 
-/*
-fake.isbn10(separator='-')
-Генерирует старый 10-значный формат стандарта (использовался до 2007 года). Пример: 0-421-94892-2. Последним символом может быть буква X (римская 10), используемая в качестве контрольной суммы.
+-- Создаём словарь статусов читателей
+CREATE TABLE reader_status(
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    description TEXT
+);
 
-fake.isbn13(separator='-')
-Генерирует современный 13-значный формат, начинающийся с префиксов EAN (обычно 978 или 979). Пример: 978-1-5351-3933-5. 
+-- Создаём таблицу читателей
+CREATE TABLE readers (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    registration_date datetime,
+    status INT,
+    description TEXT
+    CONSTRAINT fk_reader_status 
+    FOREIGN KEY (status) REFERENCES reader_status (id)
+);
 
-fake.sbn9(separator='-')
-Генерирует 9-значный код SBN (Standard Book Numbering). Это предшественник ISBN, который использовался в Великобритании и некоторых других странах до перехода на международный 10-значный стандарт. Пример: 660-48764-
-*/
+
+
+
