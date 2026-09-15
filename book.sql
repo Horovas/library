@@ -99,4 +99,12 @@ CREATE TRIGGER trg_readers_status_changed
     FOR EACH ROW
     EXECUTE FUNCTION log_reader_status_change();
 
+-- выделяем в отдельную схему для удобства
+ALTER TABLE public.reader_status SET SCHEMA lib;
+ALTER TABLE public.book_status SET SCHEMA lib;
+ALTER TABLE public.books SET SCHEMA lib;
+ALTER TABLE public.readers SET SCHEMA lib;
+ALTER TABLE public.reader_status_log SET SCHEMA lib;
 
+-- небольшие правки здесь и в других местах
+UPDATE lib.book_status set name = 'borrowed' where id = 2;
