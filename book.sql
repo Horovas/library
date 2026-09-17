@@ -108,3 +108,14 @@ ALTER TABLE public.reader_status_log SET SCHEMA lib;
 
 -- небольшие правки здесь и в других местах
 UPDATE lib.book_status set name = 'borrowed' where id = 2;
+
+
+-- Создание таблицы взятых книг (ещё обсуждается)
+CREATE TABLE postbres.lib.borrowings (
+    id SERIAL PRIMARY KEY,
+    reader_id INT NOT NULL REFERENCES readers(id),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    meta JSONB
+--    CONSTRAINT fk_reader
+--    FOREIGN KEY (reader_id) REFERENCES readers (id)
+);
